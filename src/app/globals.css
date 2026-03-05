@@ -1,16 +1,22 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 
-:root {
+@theme {
   /* カラー */
-  --color-bg: #ECECEC;
-  --color-text: #1A1A1A;
-  --color-accent: #3B82F6;
-  --color-border: #D1D5DB;
-  --color-subtext: #6B7280;
-  --color-progress-track: #D1D5DB;
-  --color-progress-fill: #3B82F6;
+  --color-bg: #ececec;
+  --color-text: #1a1a1a;
+  --color-accent: #3b82f6;
+  --color-border: #d1d5db;
+  --color-subtext: #6b7280;
+  --color-progress-track: #d1d5db;
+  --color-progress-fill: #3b82f6;
 
   /* フォント */
-  --font-body: "Noto Sans JP", sans-serif;
-  --font-number: "Inter", sans-serif;
+  --font-family-body: 'Noto Sans JP', sans-serif;
+  --font-family-number: 'Inter', sans-serif;
+}
+
+body {
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-family-body);
 }
