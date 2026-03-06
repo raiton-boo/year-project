@@ -7,17 +7,16 @@ import { useYearProgress } from '@/hooks/useYearProgress';
 
 export default function Home() {
   const progress = useYearProgress();
-  const testProgress = {...progress, progressRate: 50}
 
   return (
     <div className="flex flex-col min-h-screen">
-      <Header year={testProgress.year} />
+      <Header year={progress.year} />
       <main className="flex-1 flex flex-col items-center justify-center px-6">
         <ElapsedDays
-          elapsedDays={testProgress.elapsedDays}
-          totalDays={testProgress.totalDays}
+          elapsedDays={progress.elapsedDays}
+          totalDays={progress.totalDays}
         />
-        <ProgressBar progressRate={testProgress.progressRate} />
+        <ProgressBar progressRate={progress.progressRate} />
       </main>
     </div>
   );

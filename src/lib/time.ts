@@ -2,7 +2,6 @@ import {
   getDayOfYear,
   isLeapYear,
   differenceInDays,
-  // startOfYear,
   endOfYear,
 } from 'date-fns';
 import { toZonedTime } from 'date-fns-tz';
@@ -35,3 +34,24 @@ export function getProgressRate(now: Date): number {
   const elapsed = getElapsedDays(now);
   return Math.min(Math.round((elapsed / total) * 100), 100);
 }
+
+/** 年末までの残り時間を詳細に返す */
+export function getRemainingTime(now: Date): RemainingTime {
+  const end = endOfYear(now);
+  const diffMs = end.getTime() - now.getTime();
+
+  const totalSeconds = Math.floor(diffMs / 1000);
+  const days = Math.floor(totalSeconds / 86400);
+  const hours = Math.floor((totalSeconds % 86400) / 3600);
+  const minutes = Math.floor((totalSeconds % 3600) / 60);
+  const seconds = totalSeconds % 60;
+
+  return { days, hours, minutes, seconds };
+}
+
+export type RemainingTime = {
+  days: number;
+  hours: number;
+  minutes: number;
+  seconds: number;
+};
