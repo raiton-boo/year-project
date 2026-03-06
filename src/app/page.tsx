@@ -1,6 +1,7 @@
 'use client';
 
 import Header from '@/components/layout/Header';
+import Footer from '@/components/layout/Footer';
 import ElapsedDays from '@/components/features/ElapsedDays';
 import ProgressBar from '@/components/features/ProgressBar';
 import RemainingDays from '@/components/features/RemainingDays';
@@ -32,6 +33,7 @@ export default function Home() {
         {/* メッセージ */}
         <YearMessage progressRate={progress.progressRate} />
       </main>
+      <Footer />
     </div>
   );
 }
