@@ -4,6 +4,7 @@ import Header from '@/components/layout/Header';
 import ElapsedDays from '@/components/features/ElapsedDays';
 import ProgressBar from '@/components/features/ProgressBar';
 import RemainingDays from '@/components/features/RemainingDays';
+import YearMessage from '@/components/features/YearMessage';
 import { useYearProgress } from '@/hooks/useYearProgress';
 
 export default function Home() {
@@ -27,6 +28,9 @@ export default function Home() {
           remainingDays={progress.remainingDays}
           remainingTime={progress.remainingTime}
         />
+
+        {/* メッセージ */}
+        <YearMessage progressRate={progress.progressRate} />
       </main>
     </div>
   );
