@@ -1,3 +1,5 @@
+'use client';
+
 import type { YearProgress } from '@/hooks/useYearProgress';
 
 type Props = Pick<YearProgress, 'elapsedDays' | 'totalDays'>;
@@ -15,7 +17,7 @@ export default function ElapsedDays({ elapsedDays, totalDays }: Props) {
       </p>
       <div className="flex items-end gap-1">
         <p
-          className="font-number font-bold leading-none selectable"
+          className="font-number font-bold leading-none"
           style={{ fontSize: 'var(--font-size-display)' }}
         >
           {elapsedDays}

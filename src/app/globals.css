@@ -32,10 +32,10 @@ body {
   -webkit-text-size-adjust: 100%; /* スマホでの自動拡大防止 */
   -webkit-user-select: none; /* テキスト選択不可 */
   user-select: none;
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: 'tnum';
 }
 
-/* 選択可能にしたい場合に付与する */
-.selectable {
-  -webkit-user-select: text !important; /* テキスト選択可能 */
-  user-select: text !important;
+.font-number {
+  font-family: var(--font-family-number);
 }

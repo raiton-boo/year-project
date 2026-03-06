@@ -55,7 +55,7 @@ export default function ProgressBar({ progressRate }: Props) {
           <motion.div
             className="w-full h-full rounded-full"
             style={{ backgroundColor: 'var(--color-progress-fill)' }}
-            animate={{ scale: [1, 1.4, 1] }}
+            animate={{ scale: [1, 1.2, 1] }}
             transition={{
               duration: 1.2,
               repeat: Infinity,

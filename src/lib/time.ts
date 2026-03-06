@@ -40,7 +40,7 @@ export function getRemainingTime(now: Date): RemainingTime {
   const end = endOfYear(now);
   const diffMs = end.getTime() - now.getTime();
 
-  const totalSeconds = Math.floor(diffMs / 1000);
+  const totalSeconds = diffMs / 1000;
   const days = Math.floor(totalSeconds / 86400);
   const hours = Math.floor((totalSeconds % 86400) / 3600);
   const minutes = Math.floor((totalSeconds % 3600) / 60);

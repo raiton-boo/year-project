@@ -21,41 +21,27 @@ export type YearProgress = {
 };
 
 export function useYearProgress(debugDate?: Date): YearProgress {
-  const [now, setNow] = useState<Date>(() => debugDate ?? getNowJST());
+  const [now, setNow] = useState<Date>(() => getNowJST());
 
   const current = debugDate ?? now;
-
   const remainingDays = getRemainingDays(current);
-  const isLastDay = remainingDays < 1;
 
   // 深夜0時に日付を更新
   useEffect(() => {
-    // デバッグ日時が指定されている場合はタイマー不要
     if (debugDate) return;
 
-    if (isLastDay) {
-      const interval = setInterval(() => {
-        setNow(getNowJST());
-      }, 1000);
-      return () => clearInterval(interval);
-    }
+    // 残り1日未満も含め、常に深夜0時に更新する
+    // 秒単位の更新はuseRemainingDisplayが担当
+    const tomorrow = new Date();
+    tomorrow.setHours(24, 0, 0, 0);
+    const msUntilMidnight = tomorrow.getTime() - Date.now();
 
-    const scheduleUpdate = () => {
-      const tomorrow = new Date();
-      tomorrow.setHours(24, 0, 0, 0);
-      const msUntilMidnight = tomorrow.getTime() - Date.now();
+    const timeout = setTimeout(() => {
+      setNow(getNowJST());
+    }, msUntilMidnight);
 
-      const timeout = setTimeout(() => {
-        setNow(getNowJST());
-        scheduleUpdate();
-      }, msUntilMidnight);
-
-      return timeout;
-    };
-
-    const timeout = scheduleUpdate();
     return () => clearTimeout(timeout);
-  }, [isLastDay, debugDate]);
+  }, [debugDate]);
 
   return {
     year: current.getFullYear(),
