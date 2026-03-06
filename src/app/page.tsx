@@ -9,7 +9,7 @@ export default function Home() {
 
   return (
     <div className="flex flex-col min-h-screen">
-      <Header />
+      <Header year={progress.year} />
       <main className="flex-1 flex flex-col items-center justify-center px-6">
         <ElapsedDays
           elapsedDays={progress.elapsedDays}
