@@ -14,7 +14,7 @@ type TimeUnitProps = {
 
 function TimeUnit({ value, unit, large = false }: TimeUnitProps) {
   return (
-    <div className="flex items-end gap-1">
+    <div className="flex items-end gap-1 whitespace-nowrap">
       <p
         className="font-number font-bold leading-none"
         style={{
@@ -85,7 +85,7 @@ export default function RemainingDays({ remainingDays, remainingTime }: Props) {
         残り
       </p>
 
-      <div className="flex items-end gap-2 flex-wrap justify-center">
+      <div className="flex items-end gap-2 justify-center flex-nowrap">
         {!isUnderOneDay && <TimeUnit value={days} unit="日" large />}
         {(isUnderMonth || isExpanding) && (
           <TimeUnit value={hours} unit="時間" large={isUnderOneDay} />
