@@ -2,33 +2,34 @@
 
 ## 目的
 
-- mainブランチを本番とする。developを統合・検証用に残す。feature/\* で開発。
+- main ブランチを本番とする。develop を統合・検証用に残す。feature/\* で開発する。
 
 ## ブランチ一覧
 
 - feature/\*
-  - 各機能や修正用。開発はここで行い、完了したら develop へ PR を作成。
+  - 各機能や修正用。開発はここで行い、完了したら develop に反映。
+  - develop へのマージは PR を省略して直接 push/merge して構いません（PRしてもいい）。
   - CI（lint/test/build）が必須。
 - develop
   - 統合・動作確認用。プレビューデプロイや結合テストを行う。
-  - 安定したら develop → main の PR を作成してマージ。
+  - 安定したら develop → main の PR を作成してレビュー・マージする（main への直接マージは禁止）。
 - main
   - 本番ブランチ。main へのマージ（PR）で本番用 CI/CD（ビルド → デプロイ）を実行する。
-  - タグを切って正式リリースを記録する（例: v1.0.0）。
+  - リリースは main 上でタグを切って記録する（例: v1.0.0）。タグ push によってデプロイがトリガされます。
 
 ## リリース手順
 
-1. feature/\* を develop にマージ（PR）して統合・確認する。
-2. develop 上で最終確認を行う。
+1. feature/\* を develop に反映（直接マージ可）。
+2. develop 上で統合・確認（CI実行）。
 3. develop → main に PR を作成してレビュー・マージする。
-4. main にマージ後、RELEASE_NOTES.md を更新してタグを作成する（git tag -a vX.Y.Z）。
-5. タグ push によって CI/CD がデプロイを実行。
+4. main にマージ後、RELEASE_NOTES.md を更新しタグを作成（git tag -a vX.Y.Z）。
+5. タグ push により CI/CD がデプロイを実行。
 
 ## CI / CD の役割
 
-- CI: PR で lint / test / build を実行（品質チェック）。
-- CD: main へのマージ時に本番デプロイを実行。
+- CI: PR（および develop push）で lint / test / build を実行（品質チェック）。
+- CD: タグ push（main 上のタグ）でビルド→デプロイを実行（本番公開）。
 
-## ブランチ保護
+## ブランチ保護（推奨）
 
-- main: 直接 push 禁止、status checks（CI）必須、PR マージを必須にする（レビュー数は任意で設定）。
+- main: 直接 push 禁止、status checks（CI）必須、PR マージ必須（レビュー 1 人を推奨）。

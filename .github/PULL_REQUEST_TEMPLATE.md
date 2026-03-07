@@ -12,7 +12,7 @@
 ### チェックリスト
 
 - [ ] CI（lint/test/build）が通っている
-- [ ] CHANGELOG / RELEASE_NOTES の更新が必要なら実施済み
+- [ ] RELEASE_NOTES の更新が必要なら実施済み
 - [ ] ローカルで動作確認済み
 
 ### 備考
