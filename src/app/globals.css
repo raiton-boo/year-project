@@ -1,18 +1,27 @@
 @import 'tailwindcss';
 
 @theme {
-  /* カラー */
-  --color-bg: #ececec;
-  --color-text: #1a1a1a;
-  --color-accent: #3b82f6;
-  --color-border: #d1d5db;
-  --color-subtext: #4b5563;
-  --color-progress-track: #d1d5db;
-  --color-progress-fill: #3b82f6;
+  /* カラー（コンクリートモチーフ） */
+  --color-bg: #8e949b;
+  --color-surface: #848b93;
+  --color-surface-deep: #0c1218;
+  --color-text: #f0f4f8;
+  --color-subtext: rgba(240, 244, 248, 0.65);
+  --color-accent: #fbbf24;
+  --color-accent-sub: #fcd34d;
+  --color-accent-glow: rgba(251, 191, 36, 0.75);
+  --color-border: rgba(255, 255, 255, 0.12);
+  --color-progress-track: #6b727a;
+  --color-progress-fill: #fbbf24;
+
+  /* パネル文字色 */
+  --color-panel-text: #e8dcc8;
+  --color-digital-text: #fbbf24;
+  --color-digital-sub: #fcd34d;
+  --color-sticky-text: #2c1810;
 
   /* フォント */
-  --font-family-body: 'Noto Sans JP', sans-serif;
-  --font-family-number: 'Inter', sans-serif;
+  --font-family-digital: var(--font-orbitron), sans-serif;
 
   /* フォントサイズ*/
   --font-size-xs: clamp(0.75rem, 2.5vw, 0.875rem); /* 補助テキスト */
@@ -26,16 +35,96 @@
 
 body {
   background-color: var(--color-bg);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23noise)' opacity='0.08'/%3E%3C/svg%3E");
+  background-repeat: repeat;
   color: var(--color-text);
-  font-family: var(--font-family-body);
   font-size: var(--font-size-base);
-  -webkit-text-size-adjust: 100%; /* スマホでの自動拡大防止 */
-  -webkit-user-select: none; /* テキスト選択不可 */
+  -webkit-text-size-adjust: 100%;
+  -webkit-user-select: none;
   user-select: none;
   font-variant-numeric: tabular-nums;
   font-feature-settings: 'tnum';
 }
 
-.font-number {
-  font-family: var(--font-family-number);
+/* コンクリートパネル（経過日数） */
+.concrete-panel {
+  background: var(--color-surface);
+  border-radius: 4px;
+  box-shadow:
+    inset 2px 2px 6px rgba(0, 0, 0, 0.45),
+    inset -1px -1px 4px rgba(255, 255, 255, 0.1),
+    0 4px 12px rgba(0, 0, 0, 0.35);
+  color: var(--color-panel-text);
+}
+
+/* デジタルサイネージパネル（残り日数） */
+.digital-panel {
+  background: var(--color-surface-deep);
+  border-radius: 6px;
+  box-shadow:
+    0 0 0 2px #2a3540,
+    0 0 0 4px #1a2530,
+    inset 0 0 30px rgba(0, 0, 0, 0.8),
+    0 8px 24px rgba(0, 0, 0, 0.5);
+  background-image: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0, 0, 0, 0.08) 2px,
+    rgba(0, 0, 0, 0.08) 4px
+  );
+}
+
+/* デジタル数字（Orbitron + 発光） */
+.font-digital {
+  font-family: var(--font-family-digital);
+  color: var(--color-digital-text);
+  text-shadow:
+    0 0 10px var(--color-accent-glow),
+    0 0 30px rgba(251, 191, 36, 0.4),
+    0 0 60px rgba(251, 191, 36, 0.2);
+}
+
+/* デジタルサブテキスト（単位など） */
+.font-digital-sub {
+  font-family: var(--font-family-digital);
+  color: var(--color-digital-sub);
+  text-shadow: 0 0 8px var(--color-accent-glow);
+}
+
+/* プログレスバートラック（溝彫り） */
+.progress-track {
+  box-shadow:
+    inset 2px 2px 5px rgba(0, 0, 0, 0.5),
+    inset -1px -1px 3px rgba(255, 255, 255, 0.06);
+}
+
+/* プログレスバー塗り（発光） */
+.progress-fill {
+  box-shadow: 0 0 8px var(--color-accent-glow);
+}
+
+/* 張り紙風メッセージ */
+.sticky-note {
+  background: #f5f0e0;
+  color: var(--color-sticky-text);
+  box-shadow:
+    2px 2px 6px rgba(0, 0, 0, 0.35),
+    -1px -1px 3px rgba(0, 0, 0, 0.15);
+  transform: rotate(-1deg);
+  position: relative;
+  display: inline-block;
+  padding: 10px 24px;
+}
+
+.sticky-note::before {
+  content: '';
+  position: absolute;
+  top: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 48px;
+  height: 18px;
+  background: rgba(200, 210, 220, 0.55);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
 }
