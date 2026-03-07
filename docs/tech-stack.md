@@ -27,16 +27,10 @@
 
 - Zustand
 
-## Utility
+## PWA
 
-- react-use
-- clsx
-- tailwind-merge
+- next-pwa
 
 ## SEO
 
 - next-sitemap
-
-## PWA
-
-- next-pwa
