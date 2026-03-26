@@ -30,8 +30,6 @@ export function useYearProgress(debugDate?: Date): YearProgress {
   useEffect(() => {
     if (debugDate) return;
 
-    // 残り1日未満も含め、常に深夜0時に更新する
-    // 秒単位の更新はuseRemainingDisplayが担当
     const tomorrow = new Date();
     tomorrow.setHours(24, 0, 0, 0);
     const msUntilMidnight = tomorrow.getTime() - Date.now();

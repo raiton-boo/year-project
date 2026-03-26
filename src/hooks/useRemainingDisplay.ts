@@ -22,17 +22,14 @@ export function useRemainingDisplay({ remainingDays, remainingTime }: Props) {
   const isUnderOneDay = remainingDays < 1;
   const isExpanding = isExpanded || isUnderOneDay;
 
-  // マウント後にlocalStorageを読む（コールバック内でsetStateするのでlintOK）
   useEffect(() => {
     const saved = localStorage.getItem(STORAGE_KEY);
-    // queueMicrotaskでレンダーフェーズから切り離す
     queueMicrotask(() => {
       setIsMounted(true);
       setIsExpanded(saved === 'true');
     });
   }, []);
 
-  // 展開中 or 残り1日未満は50ms更新
   useEffect(() => {
     if (!isExpanding) return;
 
