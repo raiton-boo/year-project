@@ -1,6 +1,5 @@
 import type { Metadata, Viewport } from 'next';
-import { Orbitron } from 'next/font/google';
-import localFont from 'next/font/local';
+import { Orbitron, Noto_Sans_JP } from 'next/font/google';
 import './globals.css';
 
 const orbitron = Orbitron({
@@ -9,8 +8,10 @@ const orbitron = Orbitron({
   display: 'swap',
 });
 
-const hitoriGothic = localFont({
-  src: '../../public/fonts/HitoriGothic/ひとりゴシック.ttf',
+const notoSansJp = Noto_Sans_JP({
+  subsets: ['latin', 'latin-ext'],
+  weight: ['400', '700'],
+  variable: '--font-noto-sans-jp',
   display: 'swap',
 });
 
@@ -32,8 +33,8 @@ export default function RootLayout({
   return (
     <html lang="ja">
       <body
-        className={`${orbitron.variable} min-h-screen bg-bg text-text`}
-        style={{ fontFamily: hitoriGothic.style.fontFamily }}
+        className={`${orbitron.variable} ${notoSansJp.variable} min-h-screen bg-bg text-text`}
+        style={{ fontFamily: notoSansJp.style.fontFamily }}
       >
         {children}
       </body>
