@@ -11,7 +11,7 @@
   --color-progress-fill: #3b82f6;
 
   /* フォント */
-  --font-family-digital: var(--font-orbitron), sans-serif;
+  --font-family-digital: var(--font-noto-sans-mono), monospace;
 
   --font-size-xs: clamp(0.75rem, 2.5vw, 0.875rem); /* 補助テキスト */
   --font-size-sm: clamp(0.875rem, 3vw, 1rem); /* 小テキスト */
@@ -29,14 +29,16 @@
 body {
   background-color: var(--color-bg);
   color: var(--color-text);
+  font-family: var(--font-noto-sans-jp);
   font-size: var(--font-size-base);
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: 'tnum';
   -webkit-text-size-adjust: 100%; /* スマホでの自動拡大防止 */
   -webkit-user-select: none; /* テキスト選択不可 */
   user-select: none;
-  font-variant-numeric: tabular-nums;
-  font-feature-settings: 'tnum';
 }
 
 .font-number {
-  font-family: var(--font-family-number);
+  font-family: var(--font-family-digital) !important;
+  font-variant-numeric: tabular-nums;
 }

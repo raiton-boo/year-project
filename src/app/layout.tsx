@@ -1,17 +1,18 @@
 import type { Metadata, Viewport } from 'next';
-import { Orbitron, Noto_Sans_JP } from 'next/font/google';
+import { Noto_Sans_JP, Noto_Sans_Mono } from 'next/font/google';
 import './globals.css';
-
-const orbitron = Orbitron({
-  subsets: ['latin'],
-  variable: '--font-orbitron',
-  display: 'swap',
-});
 
 const notoSansJp = Noto_Sans_JP({
   subsets: ['latin', 'latin-ext'],
   weight: ['400', '700'],
   variable: '--font-noto-sans-jp',
+  display: 'swap',
+});
+
+const notoSansMono = Noto_Sans_Mono({
+  subsets: ['latin'],
+  weight: ['400', '700'],
+  variable: '--font-noto-sans-mono',
   display: 'swap',
 });
 
@@ -31,13 +32,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="ja">
-      <body
-        className={`${orbitron.variable} ${notoSansJp.variable} min-h-screen bg-bg text-text`}
-        style={{ fontFamily: notoSansJp.style.fontFamily }}
-      >
-        {children}
-      </body>
+    <html
+      lang="ja"
+      className={`${notoSansJp.variable} ${notoSansMono.variable}`}
+    >
+      <body className="min-h-screen bg-bg text-text">{children}</body>
     </html>
   );
 }
