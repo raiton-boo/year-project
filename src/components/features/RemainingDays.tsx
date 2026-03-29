@@ -19,7 +19,7 @@ function TimeUnit({ value, unit, large = false }: TimeUnitProps) {
         className="font-number leading-none"
         style={{
           fontSize: large
-            ? 'clamp(1.5rem, 5vw, 2.5rem)'
+            ? 'clamp(2rem, 6vw, 3rem)'
             : 'var(--font-size-xl)',
           fontWeight: 600,
         }}
