@@ -6,7 +6,7 @@
   --color-text: #1a1a1a;
   --color-accent: #3b82f6;
   --color-border: #d1d5db;
-  --color-subtext: #4b5563;
+  --color-subtext: #666666;
   --color-progress-track: #d1d5db;
   --color-progress-fill: #3b82f6;
 
@@ -24,6 +24,9 @@
   /* プログレスバー */
   --progress-bar-height: clamp(0.25rem, 1vw, 0.5rem);
   --progress-pin-size: clamp(0.75rem, 2vw, 1rem);
+
+  --letter-spacing-tight: -0.02em;
+  --letter-spacing-normal: 0;
 }
 
 body {

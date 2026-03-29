@@ -11,14 +11,19 @@ export default function ElapsedDays({ elapsedDays, totalDays }: Props) {
         style={{
           fontSize: 'var(--font-size-sm)',
           color: 'var(--color-subtext)',
+          fontWeight: 500,
         }}
       >
         今日で
       </p>
       <div className="flex items-end gap-1">
         <p
-          className="font-number font-bold leading-none"
-          style={{ fontSize: 'var(--font-size-display)' }}
+          className="font-number leading-none"
+          style={{
+            fontSize: 'clamp(3.75rem, 12vw, 6rem)',
+            fontWeight: 800,
+            letterSpacing: 'var(--letter-spacing-tight)',
+          }}
         >
           {elapsedDays}
         </p>

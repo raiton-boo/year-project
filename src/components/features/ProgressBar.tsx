@@ -15,11 +15,12 @@ export default function ProgressBar({ progressRate }: Props) {
       <div className="relative w-full py-2">
         {/* パーセント表示 */}
         <motion.p
-          className="absolute -top-5 -translate-x-1/2 font-number font-bold"
+          className="absolute -top-5 -translate-x-1/2 font-number"
           style={{
             left: `${clampedLeft}%`,
             fontSize: 'var(--font-size-sm)',
             color: 'var(--color-accent)',
+            fontWeight: 700,
           }}
           initial={{ left: '0%' }}
           animate={{ left: `${clampedLeft}%` }}

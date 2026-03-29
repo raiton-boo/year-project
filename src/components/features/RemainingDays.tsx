@@ -16,9 +16,12 @@ function TimeUnit({ value, unit, large = false }: TimeUnitProps) {
   return (
     <div className="flex items-end gap-1 whitespace-nowrap">
       <p
-        className="font-number font-bold leading-none"
+        className="font-number leading-none"
         style={{
-          fontSize: large ? 'var(--font-size-display)' : 'var(--font-size-xl)',
+          fontSize: large
+            ? 'clamp(1.5rem, 5vw, 2.5rem)'
+            : 'var(--font-size-xl)',
+          fontWeight: 600,
         }}
       >
         {value}
@@ -50,41 +53,17 @@ export default function RemainingDays({ remainingDays, remainingTime }: Props) {
 
   const { days, hours, minutes, seconds } = displayTime;
 
-  // マウント前は日数のみ表示（チラつき防止）
-  if (!isMounted) {
-    return (
-      <div className="flex flex-col items-center gap-1">
-        <p
-          style={{
-            fontSize: 'var(--font-size-sm)',
-            color: 'var(--color-subtext)',
-          }}
-        >
-          残り
-        </p>
-        <TimeUnit value={remainingTime.days} unit="日" large />
-      </div>
-    );
-  }
-
-  return (
-    <button
-      className="flex flex-col items-center gap-1"
-      style={{
-        pointerEvents: isUnderOneDay ? 'none' : 'auto',
-        cursor: isUnderOneDay ? 'default' : 'pointer',
-      }}
-      onClick={handleToggle}
-    >
+  const content = (
+    <>
       <p
         style={{
           fontSize: 'var(--font-size-sm)',
           color: 'var(--color-subtext)',
+          fontWeight: 500,
         }}
       >
         残り
       </p>
-
       <div className="flex items-end gap-2 justify-center flex-nowrap">
         {!isUnderOneDay && <TimeUnit value={days} unit="日" large />}
         {(isUnderMonth || isExpanding) && (
@@ -101,7 +80,6 @@ export default function RemainingDays({ remainingDays, remainingTime }: Props) {
           />
         )}
       </div>
-
       {!isUnderOneDay && (
         <p
           style={{
@@ -112,6 +90,28 @@ export default function RemainingDays({ remainingDays, remainingTime }: Props) {
           {isExpanded ? 'タップで戻す' : 'タップで詳細表示'}
         </p>
       )}
+    </>
+  );
+
+  // マウント前はdiv、マウント後はbuttonに変わる
+  if (!isMounted) {
+    return (
+      <div className="flex flex-col items-center gap-1">
+        {content}
+      </div>
+    );
+  }
+
+  return (
+    <button
+      className="flex flex-col items-center gap-1"
+      style={{
+        pointerEvents: isUnderOneDay ? 'none' : 'auto',
+        cursor: isUnderOneDay ? 'default' : 'pointer',
+      }}
+      onClick={handleToggle}
+    >
+      {content}
     </button>
   );
 }
