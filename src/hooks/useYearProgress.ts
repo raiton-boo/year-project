@@ -31,7 +31,8 @@ export function useYearProgress(debugDate?: Date): YearProgress {
     if (debugDate) return;
 
     const tomorrow = new Date();
-    tomorrow.setHours(24, 0, 0, 0);
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    tomorrow.setHours(0, 0, 0, 0);
     const msUntilMidnight = tomorrow.getTime() - Date.now();
 
     const timeout = setTimeout(() => {
