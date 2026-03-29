@@ -30,8 +30,11 @@ export default function ProgressBar({ progressRate }: Props) {
 
         {/* バー本体 */}
         <div
-          className="relative w-full h-1 rounded-full"
-          style={{ backgroundColor: 'var(--color-progress-track)' }}
+          className="relative w-full rounded-full"
+          style={{
+            height: 'var(--progress-bar-height)',
+            backgroundColor: 'var(--color-progress-track)',
+          }}
         >
           {/* 塗り */}
           <motion.div
@@ -45,8 +48,12 @@ export default function ProgressBar({ progressRate }: Props) {
 
         {/* ピン */}
         <motion.div
-          className="absolute top-1/2 -translate-y-1/2 -translate-x-1/2 w-3 h-3 rounded-full"
-          style={{ backgroundColor: 'var(--color-progress-fill)' }}
+          className="absolute top-1/2 -translate-y-1/2 -translate-x-1/2 rounded-full"
+          style={{
+            width: 'var(--progress-pin-size)',
+            height: 'var(--progress-pin-size)',
+            backgroundColor: 'var(--color-progress-fill)',
+          }}
           initial={{ left: '0%' }}
           animate={{ left: `${progressRate}%` }}
           transition={{ duration: 1, ease: 'easeOut' }}
