@@ -35,7 +35,7 @@ export function useRemainingDisplay({ remainingDays, remainingTime }: Props) {
 
     intervalRef.current = setInterval(() => {
       setLiveTime(getRemainingTime(getNowJST()));
-    }, 100);
+    }, 33);
 
     return () => {
       if (intervalRef.current) clearInterval(intervalRef.current);
