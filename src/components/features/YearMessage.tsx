@@ -13,7 +13,7 @@ export default function YearMessage({ progressRate }: Props) {
       <p
         style={{
           fontSize: 'var(--font-size-lg)',
-          color: 'var(--color-subtext)',
+          color: 'var(--color-text)',
         }}
       >
         {message}

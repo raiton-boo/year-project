@@ -6,15 +6,13 @@
   --color-text: #1a1a1a;
   --color-accent: #3b82f6;
   --color-border: #d1d5db;
-  --color-subtext: #4b5563;
+  --color-subtext: #666666;
   --color-progress-track: #d1d5db;
   --color-progress-fill: #3b82f6;
 
   /* フォント */
-  --font-family-body: 'Noto Sans JP', sans-serif;
-  --font-family-number: 'Inter', sans-serif;
+  --font-family-digital: var(--font-noto-sans-mono), monospace;
 
-  /* フォントサイズ*/
   --font-size-xs: clamp(0.75rem, 2.5vw, 0.875rem); /* 補助テキスト */
   --font-size-sm: clamp(0.875rem, 3vw, 1rem); /* 小テキスト */
   --font-size-base: clamp(1rem, 3.5vw, 1.125rem); /* 本文 */
@@ -22,20 +20,27 @@
   --font-size-xl: clamp(1.25rem, 5vw, 1.5rem); /* 見出し */
   --font-size-2xl: clamp(1.5rem, 6vw, 2rem); /* セクションタイトル */
   --font-size-display: clamp(3rem, 15vw, 6rem); /* 残り日数などの大きい数字 */
+
+  /* プログレスバー */
+  --progress-bar-height: clamp(0.25rem, 1vw, 0.5rem);
+  --progress-pin-size: clamp(0.75rem, 2vw, 1rem);
+
+  --letter-spacing-tight: -0.02em;
+  --letter-spacing-normal: 0;
 }
 
 body {
   background-color: var(--color-bg);
   color: var(--color-text);
-  font-family: var(--font-family-body);
+  font-family: var(--font-noto-sans-jp);
   font-size: var(--font-size-base);
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: 'tnum';
   -webkit-text-size-adjust: 100%; /* スマホでの自動拡大防止 */
   -webkit-user-select: none; /* テキスト選択不可 */
   user-select: none;
-  font-variant-numeric: tabular-nums;
-  font-feature-settings: 'tnum';
 }
 
 .font-number {
-  font-family: var(--font-family-number);
+  font-family: var(--font-family-digital) !important;
 }

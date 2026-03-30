@@ -12,23 +12,44 @@ type TimeUnitProps = {
   large?: boolean;
 };
 
+const labelStyle = {
+  fontSize: 'var(--font-size-sm)',
+  color: 'var(--color-subtext)',
+  fontWeight: 500 as const,
+};
+
+const timeUnitNumberSmallStyle = {
+  fontSize: 'var(--font-size-xl)',
+  fontWeight: 600 as const,
+};
+
+const timeUnitNumberLargeStyle = {
+  fontSize: 'clamp(2rem, 6vw, 3rem)',
+  fontWeight: 600 as const,
+};
+
+const unitStyle = {
+  fontSize: 'var(--font-size-lg)',
+  color: 'var(--color-subtext)',
+};
+
+const unitStyleSmall = {
+  fontSize: 'var(--font-size-base)',
+  color: 'var(--color-subtext)',
+};
+
 function TimeUnit({ value, unit, large = false }: TimeUnitProps) {
   return (
-    <div className="flex items-end gap-1">
+    <div className="flex items-end gap-1 whitespace-nowrap">
       <p
-        className="font-number font-bold leading-none"
-        style={{
-          fontSize: large ? 'var(--font-size-display)' : 'var(--font-size-xl)',
-        }}
+        className="font-number leading-none"
+        style={large ? timeUnitNumberLargeStyle : timeUnitNumberSmallStyle}
       >
         {value}
       </p>
       <p
         className={cn(large ? 'mb-3' : 'mb-2')}
-        style={{
-          fontSize: large ? 'var(--font-size-lg)' : 'var(--font-size-base)',
-          color: 'var(--color-subtext)',
-        }}
+        style={large ? unitStyle : unitStyleSmall}
       >
         {unit}
       </p>
@@ -50,42 +71,10 @@ export default function RemainingDays({ remainingDays, remainingTime }: Props) {
 
   const { days, hours, minutes, seconds } = displayTime;
 
-  // マウント前は日数のみ表示（チラつき防止）
-  if (!isMounted) {
-    return (
-      <div className="flex flex-col items-center gap-1">
-        <p
-          style={{
-            fontSize: 'var(--font-size-sm)',
-            color: 'var(--color-subtext)',
-          }}
-        >
-          残り
-        </p>
-        <TimeUnit value={remainingTime.days} unit="日" large />
-      </div>
-    );
-  }
-
-  return (
-    <button
-      className="flex flex-col items-center gap-1"
-      style={{
-        pointerEvents: isUnderOneDay ? 'none' : 'auto',
-        cursor: isUnderOneDay ? 'default' : 'pointer',
-      }}
-      onClick={handleToggle}
-    >
-      <p
-        style={{
-          fontSize: 'var(--font-size-sm)',
-          color: 'var(--color-subtext)',
-        }}
-      >
-        残り
-      </p>
-
-      <div className="flex items-end gap-2 flex-wrap justify-center">
+  const content = (
+    <>
+      <p style={labelStyle}>残り</p>
+      <div className="flex items-end gap-2 justify-center flex-nowrap">
         {!isUnderOneDay && <TimeUnit value={days} unit="日" large />}
         {(isUnderMonth || isExpanding) && (
           <TimeUnit value={hours} unit="時間" large={isUnderOneDay} />
@@ -95,23 +84,26 @@ export default function RemainingDays({ remainingDays, remainingTime }: Props) {
         )}
         {isExpanding && (
           <TimeUnit
-            value={seconds.toFixed(2)}
+            value={seconds.toFixed(2).padStart(5, '0')}
             unit="秒"
             large={isUnderOneDay}
           />
         )}
       </div>
+    </>
+  );
 
-      {!isUnderOneDay && (
-        <p
-          style={{
-            fontSize: 'var(--font-size-xs)',
-            color: 'var(--color-subtext)',
-          }}
-        >
-          {isExpanded ? 'タップで戻す' : 'タップで詳細表示'}
-        </p>
-      )}
+  if (!isMounted) {
+    return null;
+  }
+
+  return (
+    <button
+      onClick={handleToggle}
+      className="transition-all duration-200"
+      aria-pressed={isExpanded}
+    >
+      {content}
     </button>
   );
 }

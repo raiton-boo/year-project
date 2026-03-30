@@ -5,6 +5,10 @@ import { getNowJST, getRemainingTime } from '@/lib/time';
 import type { RemainingTime } from '@/lib/time';
 
 const STORAGE_KEY = 'remainingDays_isExpanded';
+const THRESHOLD_DAYS_UNDER_MONTH = 30;
+const THRESHOLD_DAYS_UNDER_THREE = 3;
+const THRESHOLD_DAYS_UNDER_ONE = 1;
+const UPDATE_INTERVAL_MS = 33;
 
 type Props = {
   remainingDays: number;
@@ -17,28 +21,25 @@ export function useRemainingDisplay({ remainingDays, remainingTime }: Props) {
   const [liveTime, setLiveTime] = useState(remainingTime);
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
-  const isUnderMonth = remainingDays < 30;
-  const isUnderThreeDays = remainingDays < 3;
-  const isUnderOneDay = remainingDays < 1;
+  const isUnderMonth = remainingDays < THRESHOLD_DAYS_UNDER_MONTH;
+  const isUnderThreeDays = remainingDays < THRESHOLD_DAYS_UNDER_THREE;
+  const isUnderOneDay = remainingDays < THRESHOLD_DAYS_UNDER_ONE;
   const isExpanding = isExpanded || isUnderOneDay;
 
-  // マウント後にlocalStorageを読む（コールバック内でsetStateするのでlintOK）
   useEffect(() => {
     const saved = localStorage.getItem(STORAGE_KEY);
-    // queueMicrotaskでレンダーフェーズから切り離す
     queueMicrotask(() => {
       setIsMounted(true);
       setIsExpanded(saved === 'true');
     });
   }, []);
 
-  // 展開中 or 残り1日未満は50ms更新
   useEffect(() => {
     if (!isExpanding) return;
 
     intervalRef.current = setInterval(() => {
       setLiveTime(getRemainingTime(getNowJST()));
-    }, 50);
+    }, UPDATE_INTERVAL_MS);
 
     return () => {
       if (intervalRef.current) clearInterval(intervalRef.current);

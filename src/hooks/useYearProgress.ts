@@ -10,6 +10,7 @@ import {
   getRemainingTime,
 } from '@/lib/time';
 import type { RemainingTime } from '@/lib/time';
+import { toZonedTime } from 'date-fns-tz';
 
 export type YearProgress = {
   year: number;
@@ -30,15 +31,14 @@ export function useYearProgress(debugDate?: Date): YearProgress {
   useEffect(() => {
     if (debugDate) return;
 
-    // 残り1日未満も含め、常に深夜0時に更新する
-    // 秒単位の更新はuseRemainingDisplayが担当
-    const tomorrow = new Date();
-    tomorrow.setHours(24, 0, 0, 0);
-    const msUntilMidnight = tomorrow.getTime() - Date.now();
+    const tomorrowJST = toZonedTime(new Date(), 'Asia/Tokyo');
+    tomorrowJST.setDate(tomorrowJST.getDate() + 1);
+    tomorrowJST.setHours(0, 0, 0, 0);
+    const msUnitlMidnight = tomorrowJST.getTime() - new Date().getTime();
 
     const timeout = setTimeout(() => {
       setNow(getNowJST());
-    }, msUntilMidnight);
+    }, msUnitlMidnight);
 
     return () => clearTimeout(timeout);
   }, [debugDate]);
