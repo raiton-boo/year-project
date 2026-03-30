@@ -4,16 +4,16 @@
 
 ### 種別
 
-- [ ] feature
-- [ ] fix
-- [ ] docs
-- [ ] chore
+- feature
+- fix
+- docs
+- chore
 
 ### チェックリスト
 
-- [ ] CI（lint/test/build）が通っている
-- [ ] RELEASE_NOTES の更新が必要なら実施済み
-- [ ] ローカルで動作確認済み
+- CI（lint/test/build）が通っている
+- RELEASE_NOTES の更新が必要なら実施済み
+- ローカルで動作確認済み
 
 ### 備考
 
