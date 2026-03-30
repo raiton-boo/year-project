@@ -4,7 +4,7 @@ const isProd = process.env.NODE_ENV === 'production';
 
 const nextConfig: NextConfig = {
   output: 'export',
-  distDir: 'docs',
+  distDir: 'build',
   trailingSlash: true,
   reactCompiler: true,
   basePath: isProd ? '/year-project' : '',
