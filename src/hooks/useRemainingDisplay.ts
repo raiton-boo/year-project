@@ -5,10 +5,6 @@ import { getNowJST, getRemainingTime } from '@/lib/time';
 import type { RemainingTime } from '@/lib/time';
 
 const STORAGE_KEY = 'remainingDays_isExpanded';
-const THRESHOLD_DAYS_UNDER_MONTH = 30;
-const THRESHOLD_DAYS_UNDER_THREE = 3;
-const THRESHOLD_DAYS_UNDER_ONE = 1;
-const UPDATE_INTERVAL_MS = 33;
 
 type Props = {
   remainingDays: number;
@@ -21,9 +17,9 @@ export function useRemainingDisplay({ remainingDays, remainingTime }: Props) {
   const [liveTime, setLiveTime] = useState(remainingTime);
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
-  const isUnderMonth = remainingDays < THRESHOLD_DAYS_UNDER_MONTH;
-  const isUnderThreeDays = remainingDays < THRESHOLD_DAYS_UNDER_THREE;
-  const isUnderOneDay = remainingDays < THRESHOLD_DAYS_UNDER_ONE;
+  const isUnderMonth = remainingDays < 30;
+  const isUnderThreeDays = remainingDays < 3;
+  const isUnderOneDay = remainingDays < 1;
   const isExpanding = isExpanded || isUnderOneDay;
 
   useEffect(() => {
@@ -39,7 +35,7 @@ export function useRemainingDisplay({ remainingDays, remainingTime }: Props) {
 
     intervalRef.current = setInterval(() => {
       setLiveTime(getRemainingTime(getNowJST()));
-    }, UPDATE_INTERVAL_MS);
+    }, 33);
 
     return () => {
       if (intervalRef.current) clearInterval(intervalRef.current);

@@ -12,44 +12,24 @@ type TimeUnitProps = {
   large?: boolean;
 };
 
-const labelStyle = {
-  fontSize: 'var(--font-size-sm)',
-  color: 'var(--color-subtext)',
-  fontWeight: 500 as const,
-};
-
-const timeUnitNumberSmallStyle = {
-  fontSize: 'var(--font-size-xl)',
-  fontWeight: 600 as const,
-};
-
-const timeUnitNumberLargeStyle = {
-  fontSize: 'clamp(2rem, 6vw, 3rem)',
-  fontWeight: 600 as const,
-};
-
-const unitStyle = {
-  fontSize: 'var(--font-size-lg)',
-  color: 'var(--color-subtext)',
-};
-
-const unitStyleSmall = {
-  fontSize: 'var(--font-size-base)',
-  color: 'var(--color-subtext)',
-};
-
 function TimeUnit({ value, unit, large = false }: TimeUnitProps) {
   return (
     <div className="flex items-end gap-1 whitespace-nowrap">
       <p
         className="font-number leading-none"
-        style={large ? timeUnitNumberLargeStyle : timeUnitNumberSmallStyle}
+        style={{
+          fontSize: large ? 'clamp(2rem, 6vw, 3rem)' : 'var(--font-size-xl)',
+          fontWeight: 600,
+        }}
       >
         {value}
       </p>
       <p
         className={cn(large ? 'mb-3' : 'mb-2')}
-        style={large ? unitStyle : unitStyleSmall}
+        style={{
+          fontSize: large ? 'var(--font-size-lg)' : 'var(--font-size-base)',
+          color: 'var(--color-subtext)',
+        }}
       >
         {unit}
       </p>
@@ -73,7 +53,15 @@ export default function RemainingDays({ remainingDays, remainingTime }: Props) {
 
   const content = (
     <>
-      <p style={labelStyle}>残り</p>
+      <p
+        style={{
+          fontSize: 'var(--font-size-sm)',
+          color: 'var(--color-subtext)',
+          fontWeight: 500,
+        }}
+      >
+        残り
+      </p>
       <div className="flex items-end gap-2 justify-center flex-nowrap">
         {!isUnderOneDay && <TimeUnit value={days} unit="日" large />}
         {(isUnderMonth || isExpanding) && (
@@ -90,18 +78,32 @@ export default function RemainingDays({ remainingDays, remainingTime }: Props) {
           />
         )}
       </div>
+      {!isUnderOneDay && (
+        <p
+          style={{
+            fontSize: 'var(--font-size-xs)',
+            color: 'var(--color-subtext)',
+          }}
+        >
+          {isExpanded ? 'タップで戻す' : 'タップで詳細表示'}
+        </p>
+      )}
     </>
   );
 
+  // マウント前はdiv、マウント後はbuttonに変わる
   if (!isMounted) {
-    return null;
+    return <div className="flex flex-col items-center gap-1">{content}</div>;
   }
 
   return (
     <button
+      className="flex flex-col items-center gap-1"
+      style={{
+        pointerEvents: isUnderOneDay ? 'none' : 'auto',
+        cursor: isUnderOneDay ? 'default' : 'pointer',
+      }}
       onClick={handleToggle}
-      className="transition-all duration-200"
-      aria-pressed={isExpanded}
     >
       {content}
     </button>

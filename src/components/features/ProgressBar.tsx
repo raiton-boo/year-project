@@ -5,15 +5,9 @@ import type { YearProgress } from '@/hooks/useYearProgress';
 
 type Props = Pick<YearProgress, 'progressRate'>;
 
-const CLAMP_MIN_PERCENT = 8;
-const CLAMP_MAX_PERCENT = 92;
-
 export default function ProgressBar({ progressRate }: Props) {
-  // % 表示がバーの端ではみ出さないよう、表示位置を CLAMP_MIN_PERCENT~CLAMP_MAX_PERCENT% に制限する
-  const clampedLeft = Math.min(
-    Math.max(progressRate, CLAMP_MIN_PERCENT),
-    CLAMP_MAX_PERCENT
-  );
+  // パーセント表示がはみ出さないよう端を調整
+  const clampedLeft = Math.min(Math.max(progressRate, 8), 92);
 
   return (
     <div className="flex flex-col w-full max-w-lg px-4 mt-8">
@@ -55,18 +49,40 @@ export default function ProgressBar({ progressRate }: Props) {
 
         {/* ピン */}
         <motion.div
-          className="absolute top-1/2 -translate-y-1/2 rounded-full"
+          className="absolute top-1/2 -translate-y-1/2 -translate-x-1/2 rounded-full"
           style={{
-            left: `${progressRate}%`,
             width: 'var(--progress-pin-size)',
             height: 'var(--progress-pin-size)',
-            backgroundColor: 'var(--color-accent)',
-            boxShadow: '0 2px 8px rgba(59, 130, 246, 0.3)',
+            backgroundColor: 'var(--color-progress-fill)',
           }}
           initial={{ left: '0%' }}
           animate={{ left: `${progressRate}%` }}
           transition={{ duration: 1, ease: 'easeOut' }}
-        />
+        >
+          {/* 鼓動アニメーション */}
+          <motion.div
+            className="w-full h-full rounded-full"
+            style={{ backgroundColor: 'var(--color-progress-fill)' }}
+            animate={{ scale: [1, 1.2, 1] }}
+            transition={{
+              duration: 1.2,
+              repeat: Infinity,
+              ease: 'easeInOut',
+            }}
+          />
+        </motion.div>
+      </div>
+
+      {/* 0%と100%のラベル */}
+      <div
+        className="flex justify-between w-full mt-1"
+        style={{
+          fontSize: 'var(--font-size-xs)',
+          color: 'var(--color-subtext)',
+        }}
+      >
+        <span>0%</span>
+        <span>100%</span>
       </div>
     </div>
   );
