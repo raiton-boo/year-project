@@ -38,6 +38,11 @@ const unitStyleSmall = {
   color: 'var(--color-subtext)',
 };
 
+const helpTextStyle = {
+  fontSize: 'var(--font-size-xs)',
+  color: 'var(--color-subtext)',
+};
+
 function TimeUnit({ value, unit, large = false }: TimeUnitProps) {
   return (
     <div className="flex items-end gap-1 whitespace-nowrap">
@@ -90,18 +95,26 @@ export default function RemainingDays({ remainingDays, remainingTime }: Props) {
           />
         )}
       </div>
+      {!isUnderOneDay && (
+        <p style={helpTextStyle}>
+          {isExpanded ? 'タップで戻す' : 'タップで詳細表示'}
+        </p>
+      )}
     </>
   );
 
   if (!isMounted) {
-    return null;
+    return <div className="flex flex-col items-center gap-1">{content}</div>;
   }
 
   return (
     <button
+      className="flex flex-col items-center gap-1"
+      style={{
+        pointerEvents: isUnderOneDay ? 'none' : 'auto',
+        cursor: isUnderOneDay ? 'default' : 'pointer',
+      }}
       onClick={handleToggle}
-      className="transition-all duration-200"
-      aria-pressed={isExpanded}
     >
       {content}
     </button>

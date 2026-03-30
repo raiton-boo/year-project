@@ -4,29 +4,29 @@ import type { YearProgress } from '@/hooks/useYearProgress';
 
 type Props = Pick<YearProgress, 'elapsedDays' | 'totalDays'>;
 
+const labelStyle = {
+  fontSize: 'var(--font-size-sm)',
+  color: 'var(--color-subtext)',
+  fontWeight: 500 as const,
+};
+
+const numberStyle = {
+  fontSize: 'clamp(3.75rem, 12vw, 6rem)',
+  fontWeight: 800 as const,
+  letterSpacing: 'var(--letter-spacing-tight)',
+};
+
+const unitStyle = {
+  fontSize: 'var(--font-size-lg)',
+  color: 'var(--color-subtext)',
+};
+
+const smallLabelStyle = {
+  fontSize: 'var(--font-size-sm)',
+  color: 'var(--color-subtext)',
+};
+
 export default function ElapsedDays({ elapsedDays, totalDays }: Props) {
-  const labelStyle = {
-    fontSize: 'var(--font-size-sm)',
-    color: 'var(--color-subtext)',
-    fontWeight: 500 as const,
-  };
-
-  const numberStyle = {
-    fontSize: 'clamp(3.75rem, 12vw, 6rem)',
-    fontWeight: 800 as const,
-    letterSpacing: 'var(--letter-spacing-tight)',
-  };
-
-  const unitStyle = {
-    fontSize: 'var(--font-size-lg)',
-    color: 'var(--color-subtext)',
-  };
-
-  const smallLabelStyle = {
-    fontSize: 'var(--font-size-sm)',
-    color: 'var(--color-subtext)',
-  };
-
   return (
     <div className="flex flex-col items-center gap-1">
       <p style={labelStyle}>今日で</p>
