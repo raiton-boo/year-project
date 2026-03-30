@@ -9,7 +9,7 @@ export default function Footer() {
           color: 'var(--color-subtext)',
         }}
       >
-        © {year} raiton
+        © {year} raiton-boo
       </p>
     </footer>
   );
