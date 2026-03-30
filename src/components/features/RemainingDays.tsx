@@ -18,9 +18,7 @@ function TimeUnit({ value, unit, large = false }: TimeUnitProps) {
       <p
         className="font-number leading-none"
         style={{
-          fontSize: large
-            ? 'clamp(2rem, 6vw, 3rem)'
-            : 'var(--font-size-xl)',
+          fontSize: large ? 'clamp(2rem, 6vw, 3rem)' : 'var(--font-size-xl)',
           fontWeight: 600,
         }}
       >
@@ -95,11 +93,7 @@ export default function RemainingDays({ remainingDays, remainingTime }: Props) {
 
   // マウント前はdiv、マウント後はbuttonに変わる
   if (!isMounted) {
-    return (
-      <div className="flex flex-col items-center gap-1">
-        {content}
-      </div>
-    );
+    return <div className="flex flex-col items-center gap-1">{content}</div>;
   }
 
   return (
