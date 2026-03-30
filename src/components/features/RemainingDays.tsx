@@ -72,7 +72,7 @@ export default function RemainingDays({ remainingDays, remainingTime }: Props) {
         )}
         {isExpanding && (
           <TimeUnit
-            value={seconds.toFixed(2)}
+            value={seconds.toFixed(2).padStart(5, '0')}
             unit="秒"
             large={isUnderOneDay}
           />

@@ -43,5 +43,4 @@ body {
 
 .font-number {
   font-family: var(--font-family-digital) !important;
-  font-variant-numeric: tabular-nums;
 }
