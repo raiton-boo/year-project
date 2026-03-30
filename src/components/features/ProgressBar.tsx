@@ -5,9 +5,20 @@ import type { YearProgress } from '@/hooks/useYearProgress';
 
 type Props = Pick<YearProgress, 'progressRate'>;
 
+const CLAMP_MIN_PERCENT = 8;
+const CLAMP_MAX_PERCENT = 92;
+
+const labelStyle = {
+  fontSize: 'var(--font-size-xs)',
+  color: 'var(--color-subtext)',
+};
+
 export default function ProgressBar({ progressRate }: Props) {
-  // パーセント表示がはみ出さないよう端を調整
-  const clampedLeft = Math.min(Math.max(progressRate, 8), 92);
+  // パーセント表示がバーの端ではみ出さないよう、表示位置を CLAMP_MIN_PERCENT~CLAMP_MAX_PERCENT% に制限
+  const clampedLeft = Math.min(
+    Math.max(progressRate, CLAMP_MIN_PERCENT),
+    CLAMP_MAX_PERCENT
+  );
 
   return (
     <div className="flex flex-col w-full max-w-lg px-4 mt-8">
@@ -74,13 +85,7 @@ export default function ProgressBar({ progressRate }: Props) {
       </div>
 
       {/* 0%と100%のラベル */}
-      <div
-        className="flex justify-between w-full mt-1"
-        style={{
-          fontSize: 'var(--font-size-xs)',
-          color: 'var(--color-subtext)',
-        }}
-      >
+      <div className="flex justify-between w-full mt-1" style={labelStyle}>
         <span>0%</span>
         <span>100%</span>
       </div>
