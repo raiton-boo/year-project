@@ -59,7 +59,7 @@ export function useRemainingDisplay({ remainingDays, remainingTime }: Props) {
     isUnderMonth,
     isUnderThreeDays,
     isUnderOneDay,
-    displayTime: isExpanding ? liveTime : remainingTime,
+    displayTime: isExpanding ? liveTime : getRemainingTime(getNowJST()),
     handleToggle,
   };
 }
