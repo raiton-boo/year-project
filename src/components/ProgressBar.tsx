@@ -42,6 +42,15 @@ export function ProgressBar() {
   const integerPercent = ratioToPercent(displayRatio);
 
   return (
-    <div style={}></div>
-  )
+    <div
+      className="w-60 h-60 rounded-full flex items-center justify-center"
+      style={{
+        background: `conic-gradient(from -90deg, #f2c14e 0%, #cfe36b ${percent}%, rgba(255,255,255,0.1) ${percent}% 100%)`,
+      }}
+    >
+      <div className="w-[73%] h-[73%] rounded-full bg-[#0d1b3a] flex items-center justify-center">
+        <span className="font-num">{integerPercent}</span>
+      </div>
+    </div>
+  );
 }
