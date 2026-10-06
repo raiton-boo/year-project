@@ -33,12 +33,16 @@
 
 ## CSS: Tailwind CSS v4
 
-## フォント: Fredoka / M PLUS Rounded 1c（Google Fonts）
+## フォント: Fredoka / Zen Maru Gothic（Google Fonts）
 
 - 数字（カウントダウン等）: `Fredoka`
-- 日本語テキスト: `M PLUS Rounded 1c`
-- 高忠実度ワイヤーフレーム（`docs/wireframe.md`）v2で採用。丸みを残しつつ、モダンで洗練された雰囲気を実現
-- 当初`Baloo 2`/`Zen Maru Gothic`を試したが、より洗練された方向性を求めて変更した
+- 日本語テキスト: `Zen Maru Gothic`
+- デザイン方向性F「イラストポップ融合」（`docs/wireframe.md`）で最終決定。比較検討の過程で`M PLUS Rounded 1c`等も試したが、最終的にこの組み合わせを採用した
+
+## クラス名結合: clsx + tailwind-merge（`cn`ユーティリティ）
+
+- 条件分岐のあるTailwindクラスを安全に結合するため、`clsx` + `tailwind-merge`を`src/lib/cn.ts`の`cn()`関数として導入
+- ボタンの選択状態（`aria-pressed`等）のような、状態に応じてクラスを出し分けるUIで使用する
 
 ## アイコン: Phosphor Icons
 
