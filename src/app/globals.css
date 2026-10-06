@@ -1,1 +1,6 @@
 @import 'tailwindcss';
+
+@theme inline {
+  --font-num: var(--font-fredoka);
+  --font-jp: var(--font-zen-maru-gothic);
+}
