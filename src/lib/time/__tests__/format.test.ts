@@ -4,6 +4,7 @@ import {
   getAutoDisplayPattern,
   isManualSwitchLocked,
   msToParts,
+  ratioToPercent,
 } from '../format';
 
 describe('format', () => {
@@ -33,5 +34,10 @@ describe('format', () => {
     expect(formatFullSeconds(4000)).toBe('4.00');
     expect(formatFullSeconds(4005)).toBe('4.00'); // 10ms未満は切り捨て
     expect(formatFullSeconds(65000)).toBe('5.00'); // 60秒で繰り上がり、秒は0〜59
+  });
+  it('ratioToPercentが経過率を整数%に変換する', () => {
+    expect(ratioToPercent(0.654)).toBe(65);
+    expect(ratioToPercent(0)).toBe(0);
+    expect(ratioToPercent(1)).toBe(100);
   });
 });

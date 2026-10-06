@@ -43,3 +43,8 @@ export function formatFullSeconds(ms: number): string {
   const centiseconds = Math.floor((ms % 1000) / 10);
   return `${seconds}.${String(centiseconds).padStart(2, '0')}`;
 }
+
+/** 経過率(0〜1)を、表示用の整数パーセントに変換する */
+export function ratioToPercent(ratio: number): number {
+  return Math.round(ratio * 100);
+}
