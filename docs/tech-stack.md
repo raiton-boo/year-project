@@ -147,7 +147,7 @@
 
 - `docs/rules/`配下（`BRANCHING.md` / `COMMIT-MESSAGE.md` / `ISSUE.md` / `PR.md`）の規約にそのまま従う
 - **プロジェクト固有の決定**: `dev`ブランチは使わず`main`+作業ブランチのみ、PRのデフォルトマージ方式は**Squash and Merge**
-- リポジトリ: `year-project`（GitHub `sa-rmatsuo`、Private）としてセットアップ済み
+- リポジトリ: `year-project`（GitHub `raiton-boo`、Public）としてセットアップ済み
 
 ## 検討中・未決の技術要素
 
