@@ -143,12 +143,18 @@
 
 - Cookie不要でプライバシーに配慮したアクセス解析。Cloudflareでホスティングするため導入も容易
 
+## Git運用
+
+- `docs/rules/`配下（`BRANCHING.md` / `COMMIT-MESSAGE.md` / `ISSUE.md` / `PR.md`）の規約にそのまま従う
+- **プロジェクト固有の決定**: `dev`ブランチは使わず`main`+作業ブランチのみ、PRのデフォルトマージ方式は**Squash and Merge**
+- リポジトリ: `year-project`（GitHub `sa-rmatsuo`、Private）としてセットアップ済み
+
 ## 検討中・未決の技術要素
 
 - OG画像・シェア画像用アセットの具体的なR2フォルダ構成（例: `/og/{quarter}/{variant}.png`、`/og/special/{event}.png`）
 - 過去の年のスナップショットのKVデータ構造（例: キー`archive:{year}`にJSONを保存）
 - 累計訪問者数カウンターのKVキー設計（例: キー`visitor:total`）
-- CI/CD（Git運用と合わせて後日決定。`docs/requirements.md`参照）
+- CI/CD（具体的な構成は実装時に決定）
 
 ## 見送った技術・方針
 
