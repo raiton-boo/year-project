@@ -1,0 +1,51 @@
+# 依存関係
+node_modules/
+.pnpm-store/
+
+# Next.js
+.next/
+out/
+next-env.d.ts
+
+# ビルド・配布物
+dist/
+build/
+
+# Cloudflare / Wrangler
+.wrangler/
+.dev.vars
+.dev.vars.*
+
+# 環境変数
+.env
+.env.local
+.env.*.local
+
+# テスト・カバレッジ
+coverage/
+.vitest/
+
+# ログ
+*.log
+npm-debug.log*
+pnpm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# キャッシュ・一時ファイル
+.cache/
+.turbo/
+*.tsbuildinfo
+
+# エディタ・IDE
+.vscode/*
+!.vscode/extensions.json
+.idea/
+
+# OS生成ファイル
+.DS_Store
+.DS_Store?
+Thumbs.db
+
+# その他
+*.pem
