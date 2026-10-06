@@ -8,12 +8,14 @@ import {
   type DisplayPattern,
 } from '@/lib/time/format';
 import { getRemainingMs } from '@/lib/time/jst';
-import { AnimatePresence, motion } from 'motion/react';
+import { motion } from 'motion/react';
 import { useEffect, useState } from 'react';
 
 const STORAGE_KEY = 'countdown-display-pattern';
 const TICK_MS = 50;
 const STAGGER_STEP = 0.08;
+const UNMOUNT_GRACE_MS = 450;
+const HIDDEN_STATE = { opacity: 0, scale: 0.6 };
 
 const PATTERN_LABELS: Record<DisplayPattern, string> = {
   days: '日',
@@ -29,22 +31,29 @@ const PATTERN_ORDER: DisplayPattern[] = [
   'full',
 ];
 
-function segmentVariants(index: number, total: number) {
-  const enterDelay = index * STAGGER_STEP;
-  const exitDelay = (total - 1 - index) * STAGGER_STEP;
+function useDelayedUnmount(active: boolean, delayMs: number): boolean {
+  const [mounted, setMounted] = useState(active);
+  useEffect(() => {
+    if (active) {
+      setMounted(true);
+      return;
+    }
+    const timer = setTimeout(() => setMounted(false), delayMs);
+    return () => clearTimeout(timer);
+  }, [active, delayMs]);
+  return mounted;
+}
+
+function segmentTransition(
+  active: boolean,
+  enterDelay: number,
+  exitDelay: number
+) {
   return {
-    initial: { opacity: 0, scale: 0.6 },
-    animate: {
-      opacity: 1,
-      scale: 1,
-      transition: { duration: 0.22, ease: 'easeOut', delay: enterDelay },
-    },
-    exit: {
-      opacity: 0,
-      scale: 0.6,
-      transition: { duration: 0.18, ease: 'easeIn', delay: exitDelay },
-    },
-  };
+    duration: active ? 0.22 : 0.18,
+    ease: active ? 'easeOut' : 'easeIn',
+    delay: active ? enterDelay : exitDelay,
+  } as const;
 }
 
 export function Countdown() {
@@ -79,16 +88,29 @@ export function Countdown() {
     };
   }, []);
 
+  const locked = remainingMs !== null && isManualSwitchLocked(remainingMs);
+  const pattern: DisplayPattern =
+    remainingMs === null
+      ? 'days'
+      : locked
+        ? 'full'
+        : (manualPattern ?? getAutoDisplayPattern(remainingMs));
+
+  const hoursActive = pattern !== 'days';
+  const minutesActive = pattern === 'days-hours-minutes' || pattern === 'full';
+  const secondsActive = pattern === 'full';
+
+  const hoursMounted = useDelayedUnmount(hoursActive, UNMOUNT_GRACE_MS);
+  const minutesMounted = useDelayedUnmount(minutesActive, UNMOUNT_GRACE_MS);
+  const secondsMounted = useDelayedUnmount(secondsActive, UNMOUNT_GRACE_MS);
+
   if (remainingMs === null) {
     return null;
   }
 
-  const locked = isManualSwitchLocked(remainingMs);
-  const pattern = locked
-    ? 'full'
-    : (manualPattern ?? getAutoDisplayPattern(remainingMs));
   const { days, hours, minutes, seconds } = msToParts(remainingMs);
-  const showCentiseconds = pattern === 'full' && !reducedMotion;
+  // 消えている最中(secondsMounted)も、整数表示に切り替えず小数点表示を保つ
+  const showCentiseconds = secondsMounted && !reducedMotion;
 
   function handleSelect(next: DisplayPattern) {
     if (locked) return;
@@ -103,50 +125,56 @@ export function Countdown() {
         <span className="font-num">{days}</span>
         <span className="font-jp">日</span>
 
-        <AnimatePresence>
-          {pattern !== 'days' && (
-            <motion.span
-              key="hours"
-              variants={segmentVariants(0, 3)}
-              initial="initial"
-              animate="animate"
-              exit="exit"
-              className="inline-flex"
-            >
-              <span className="font-num"> {hours}</span>
-              <span className="font-jp">時間</span>
-            </motion.span>
-          )}
-          {(pattern === 'days-hours-minutes' || pattern === 'full') && (
-            <motion.span
-              key="minutes"
-              variants={segmentVariants(1, 3)}
-              initial="initial"
-              animate="animate"
-              exit="exit"
-              className="inline-flex"
-            >
-              <span className="font-num"> {minutes}</span>
-              <span className="font-jp">分</span>
-            </motion.span>
-          )}
-          {pattern === 'full' && (
-            <motion.span
-              key="seconds"
-              variants={segmentVariants(2, 3)}
-              initial="initial"
-              animate="animate"
-              exit="exit"
-              className="inline-flex"
-            >
-              <span className="font-num">
-                {' '}
-                {showCentiseconds ? formatFullSeconds(remainingMs) : seconds}
-              </span>
-              <span className="font-jp">秒</span>
-            </motion.span>
-          )}
-        </AnimatePresence>
+        {hoursMounted && (
+          <motion.span
+            className="inline-flex"
+            initial={HIDDEN_STATE}
+            animate={hoursActive ? { opacity: 1, scale: 1 } : HIDDEN_STATE}
+            transition={segmentTransition(
+              hoursActive,
+              0 * STAGGER_STEP,
+              2 * STAGGER_STEP
+            )}
+          >
+            <span className="font-num"> {hours}</span>
+            <span className="font-jp">時間</span>
+          </motion.span>
+        )}
+
+        {minutesMounted && (
+          <motion.span
+            className="inline-flex"
+            initial={HIDDEN_STATE}
+            animate={minutesActive ? { opacity: 1, scale: 1 } : HIDDEN_STATE}
+            transition={segmentTransition(
+              minutesActive,
+              1 * STAGGER_STEP,
+              1 * STAGGER_STEP
+            )}
+          >
+            <span className="font-num"> {minutes}</span>
+            <span className="font-jp">分</span>
+          </motion.span>
+        )}
+
+        {secondsMounted && (
+          <motion.span
+            className="inline-flex"
+            initial={HIDDEN_STATE}
+            animate={secondsActive ? { opacity: 1, scale: 1 } : HIDDEN_STATE}
+            transition={segmentTransition(
+              secondsActive,
+              2 * STAGGER_STEP,
+              0 * STAGGER_STEP
+            )}
+          >
+            <span className="font-num">
+              {' '}
+              {showCentiseconds ? formatFullSeconds(remainingMs) : seconds}
+            </span>
+            <span className="font-jp">秒</span>
+          </motion.span>
+        )}
       </div>
 
       <div role="group" aria-label="表示単位の切り替え">
