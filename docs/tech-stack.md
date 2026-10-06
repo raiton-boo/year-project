@@ -33,6 +33,19 @@
 
 ## CSS: Tailwind CSS v4
 
+## フォント: Fredoka / M PLUS Rounded 1c（Google Fonts）
+
+- 数字（カウントダウン等）: `Fredoka`
+- 日本語テキスト: `M PLUS Rounded 1c`
+- 高忠実度ワイヤーフレーム（`docs/wireframe.md`）v2で採用。丸みを残しつつ、モダンで洗練された雰囲気を実現
+- 当初`Baloo 2`/`Zen Maru Gothic`を試したが、より洗練された方向性を求めて変更した
+
+## アイコン: Phosphor Icons
+
+- 絵文字は使用せず、アイコンで統一する
+- React実装時は`@phosphor-icons/react`パッケージを使用する
+- SNSのブランドロゴ（X/LINE/Facebook/はてな/Threads）表現は未確定（`docs/wireframe.md`の未決事項を参照）
+
 ## パッケージマネージャー: pnpm
 
 ### 比較した代替案
