@@ -33,11 +33,12 @@
 
 ## CSS: Tailwind CSS v4
 
-## フォント: Fredoka / Zen Maru Gothic（Google Fonts）
+## フォント: Baloo 2 / Zen Maru Gothic（Google Fonts）
 
-- 数字（カウントダウン等）: `Fredoka`
+- 数字（カウントダウン等）: `Baloo 2`
 - 日本語テキスト: `Zen Maru Gothic`
 - デザイン方向性F「イラストポップ融合」（`docs/wireframe.md`）で最終決定。比較検討の過程で`M PLUS Rounded 1c`等も試したが、最終的にこの組み合わせを採用した
+- **数字フォントは`Fredoka`から`Baloo 2`に変更**: `Fredoka`は等幅数字（`tnum`）のOpenType機能を実装しておらず、`font-variant-numeric: tabular-nums`を指定しても効果がなかった（CSS側ではなくフォント側の対応状況の問題）。カウントダウンの秒表示など桁数が頻繁に変わる箇所でガタつきが発生したため、同系統の丸みのある書体かつ`tnum`に対応する`Baloo 2`に切り替えた
 
 ## クラス名結合: clsx + tailwind-merge（`cn`ユーティリティ）
 
